@@ -31,11 +31,6 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-# Install Calico as CNI
-kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/tigera-operator.yaml
-curl https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/custom-resources.yaml -O
-kubectl create -f custom-resources.yaml
-
 # -- Setup KubeEdge in v1.12.1
 
 # Get Keadm as installer tool for KubeEdge
