@@ -20,6 +20,7 @@ while [ $# -gt 0 ]; do
   shift
 done
 
+sudo apt-get update
 
 # -- Install containerd as CRI for Edgeside
 
@@ -44,3 +45,5 @@ cp keadm-v1.12.1-linux-amd64/keadm/keadm /usr/local/bin/keadm
 # Join Edge-Node in K3s-Cluster
 # Note: containerd is leveraged as CRI instead of Docker by modifying the default installation 
 keadm join --cloudcore-ipport=$CLOUDSIDE_IP:10000 --token=$KE_TOKEN --kubeedge-version=v1.12.1 --remote-runtime-endpoint=unix:///var/run/containerd/containerd.sock --runtimetype=remote --cgroupdriver=cgroupfs 
+
+keadm join --cloudcore-ipport=10.1.10.86:10000 --token=20f5364bb250a55cac6f3e753acda6e5a6a621d1eac9f5971f4ee7ebd4f6d427.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODA0NDEyMzd9.kephrR_M931q1EOEdWkaTZoSizpx1tguTuHYQLgaPcA --kubeedge-version=v1.12.1 --remote-runtime-endpoint=unix:///var/run/containerd/containerd.sock --runtimetype=remote --cgroupdriver=cgroupfs 
