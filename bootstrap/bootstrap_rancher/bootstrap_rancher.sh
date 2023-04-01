@@ -1,7 +1,5 @@
 #!/bin/bash 
 
-sudo -i
-
 curl -fsSL https://get.docker.com | sh
 
 export RANCHER_VERSION="2.7.0"
