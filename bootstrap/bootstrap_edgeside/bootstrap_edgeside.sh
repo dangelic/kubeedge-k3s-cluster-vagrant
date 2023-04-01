@@ -20,6 +20,9 @@ while [ $# -gt 0 ]; do
   shift
 done
 
+# Disable firewall for testing
+sudo ufw disable
+
 sudo apt-get update
 
 # -- Install containerd as CRI for Edgeside

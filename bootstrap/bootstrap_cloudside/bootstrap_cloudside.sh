@@ -16,6 +16,9 @@ while [ $# -gt 0 ]; do
   shift
 done
 
+# Disable firewall for testing
+sudo ufw disable
+
 sudo apt-get update
 
 # -- Setup K3s Cluster in v1.22.5
