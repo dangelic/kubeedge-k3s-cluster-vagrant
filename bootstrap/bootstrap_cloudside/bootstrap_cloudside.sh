@@ -16,8 +16,6 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-sudo -i
-
 # -- Setup K3s Cluster in v1.22.5
 
 # Get installer tool for K3s and run it
