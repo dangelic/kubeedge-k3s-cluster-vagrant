@@ -1,0 +1,16 @@
+[
+    {
+        "vname": "kube-edgecore1-dev",
+        "hostname": "kube-edgecore1-dev",
+        "mem": 2048,
+        "cpu": 2,
+        "ip": "10.21.0.201"
+    },
+    {
+        "vname": "kube-edgecore2-dev",
+        "hostname": "kube-edgecore2-dev",
+        "mem": 1024,
+        "cpu": 2,
+        "ip": "10.21.0.202"
+    }
+]

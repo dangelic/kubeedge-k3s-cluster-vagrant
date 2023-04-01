@@ -1,0 +1,9 @@
+[
+    {
+        "vname": "kube-cloudcore-dev",
+        "hostname": "kube-cloudcore-dev",
+        "mem": 4096,
+        "cpu": 4,
+        "ip": "10.21.0.101"
+    }
+]

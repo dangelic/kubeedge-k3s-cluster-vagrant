@@ -1,0 +1,9 @@
+[
+    {
+        "vname": "rancher-server-dev",
+        "hostname": "rancher-server-dev",
+        "mem": 3072,
+        "cpu": 2,
+        "ip": "10.21.0.100"
+    }
+]
