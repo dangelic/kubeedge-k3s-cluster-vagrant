@@ -16,6 +16,8 @@ while [ $# -gt 0 ]; do
   shift
 done
 
+sudo apt-get update
+
 # -- Setup K3s Cluster in v1.22.5
 
 # Get installer tool for K3s and run it
@@ -39,8 +41,8 @@ cp keadm-v1.12.1-linux-amd64/keadm/keadm /usr/local/bin/keadm
 # Initialize Cloudcore with Keadm
 keadm init --advertise-address=$CLOUDSIDE_IP --profile version=v1.12.1 --kube-config=/root/.kube/config
 
-echo "Sleep 10..."
-sleep 10
+echo "Sleep 20..."
+sleep 20
 
 keadm gettoken > ketoken.txt
 echo "*** KubeEdge token ***"
