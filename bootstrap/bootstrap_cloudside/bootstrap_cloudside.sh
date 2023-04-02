@@ -34,7 +34,7 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-# -- Setup KubeEdge in v1.12.1
+# -- Setup KubeEdge in v1.13.0
 
 # Get Keadm as installer tool for KubeEdge
 wget https://github.com/kubeedge/kubeedge/releases/download/v1.13.0/keadm-v1.13.0-linux-amd64.tar.gz
@@ -50,5 +50,13 @@ sleep 20
 keadm gettoken > ketoken.txt
 echo "*** KubeEdge token ***"
 cat ketoken.txt
+
+# -- Setup EdgeMesh
+
+# Refer: https://edgemesh.netlify.app/guide/#manual-install
+# Test: https://edgemesh.netlify.app/guide/test-case.html#cross-edge-cloud
+git clone https://github.com/kubeedge/edgemesh.git
+kubectl apply -f edgemesh/build/crds/istio/
+kubectl apply -f edgemesh/build/agent/resources/
 
 echo "\nScript: done."
