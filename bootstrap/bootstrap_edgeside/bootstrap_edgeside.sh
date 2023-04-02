@@ -38,13 +38,13 @@ sudo systemctl start containerd
 mkdir -p /etc/containerd
 containerd config default > /etc/containerd/config.toml
 
-# -- Setup KubeEdge in v1.12.1
+# -- Setup KubeEdge in v1.13.0
 
 # Get Keadm as installer tool for KubeEdge
-wget https://github.com/kubeedge/kubeedge/releases/download/v1.12.1/keadm-v1.12.1-linux-amd64.tar.gz
-tar -zxvf keadm-v1.12.1-linux-amd64.tar.gz
-cp keadm-v1.12.1-linux-amd64/keadm/keadm /usr/local/bin/keadm
+wget https://github.com/kubeedge/kubeedge/releases/download/v1.13.0/keadm-v1.13.0-linux-amd64.tar.gz
+tar -zxvf keadm-v1.13.0-linux-amd64.tar.gz
+cp keadm-v1.13.0-linux-amd64/keadm/keadm /usr/local/bin/keadm
 
 # Join Edge-Node in K3s-Cluster
 # Note: containerd is leveraged as CRI instead of Docker by modifying the default installation 
-keadm join --cloudcore-ipport=$CLOUDSIDE_IP:10000 --token=$KE_TOKEN --kubeedge-version=v1.12.1 --remote-runtime-endpoint=unix:///var/run/containerd/containerd.sock --runtimetype=remote --cgroupdriver=cgroupfs 
+keadm join --cloudcore-ipport=$CLOUDSIDE_IP:10000 --token=$KE_TOKEN --kubeedge-version=v1.13.0 --remote-runtime-endpoint=unix:///var/run/containerd/containerd.sock --runtimetype=remote --cgroupdriver=cgroupfs 

@@ -37,12 +37,12 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 # -- Setup KubeEdge in v1.12.1
 
 # Get Keadm as installer tool for KubeEdge
-wget https://github.com/kubeedge/kubeedge/releases/download/v1.12.1/keadm-v1.12.1-linux-amd64.tar.gz
-tar -zxvf keadm-v1.12.1-linux-amd64.tar.gz
-cp keadm-v1.12.1-linux-amd64/keadm/keadm /usr/local/bin/keadm
+wget https://github.com/kubeedge/kubeedge/releases/download/v1.13.0/keadm-v1.13.0-linux-amd64.tar.gz
+tar -zxvf keadm-v1.13.0-linux-amd64.tar.gz
+cp keadm-v1.13.0-linux-amd64/keadm/keadm /usr/local/bin/keadm
 
 # Initialize Cloudcore with Keadm
-keadm init --advertise-address=$CLOUDSIDE_IP --profile version=v1.12.1 --kube-config=/root/.kube/config
+keadm init --advertise-address=$CLOUDSIDE_IP --profile version=v1.13.0 --kube-config=/root/.kube/config
 
 echo "Sleep 20..."
 sleep 20
@@ -51,4 +51,4 @@ keadm gettoken > ketoken.txt
 echo "*** KubeEdge token ***"
 cat ketoken.txt
 
-echo "Script: done."
+echo "\nScript: done."
