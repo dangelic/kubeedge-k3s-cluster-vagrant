@@ -24,7 +24,7 @@ sudo apt-get update
 # -- Setup K3s Cluster in v1.22.5
 
 # Get installer tool for K3s and run it
-curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.22.5+k3s1" K3S_TOKEN="leipzig" sh -
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.23.5+k3s1" K3S_TOKEN="leipzig" sh -
 
 # Make kubectl available for non-root user
 sudo chown $(id -u):$(id -g) /etc/rancher/k3s/k3s.yaml
