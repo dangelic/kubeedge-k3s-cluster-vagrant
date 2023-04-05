@@ -59,6 +59,10 @@ git clone https://github.com/kubeedge/edgemesh.git
 kubectl apply -f edgemesh/build/crds/istio/
 kubectl apply -f edgemesh/build/agent/resources/
 
+# -- Setup tunnel for Edgeside port
+export CLOUDCOREIPS=$CLOUDSIDE_IP
+iptables -t nat -A OUTPUT -p tcp --dport 10350 -j DNAT --to $CLOUDCOREIPS:10003
+
 # -- Setup MQTT-Client Cloudside as Middleware in edge-to-edge (and to cloud) communication
 
 sudo add-apt-repository -y ppa:mosquitto-dev/mosquitto-ppa
