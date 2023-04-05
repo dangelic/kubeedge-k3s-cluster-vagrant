@@ -53,4 +53,10 @@ cp keadm-v1.13.0-linux-amd64/keadm/keadm /usr/local/bin/keadm
 
 # Join Edge-Node in K3s-Cluster
 # Note: containerd is leveraged as CRI instead of Docker by modifying the default installation 
-keadm join --cloudcore-ipport=$CLOUDSIDE_IP:10000 --token=$KE_TOKEN --kubeedge-version=v1.13.0 --remote-runtime-endpoint=unix:///var/run/containerd/containerd.sock --runtimetype=remote --cgroupdriver=cgroupfs 
+keadm join --cloudcore-ipport=$CLOUDSIDE_IP:10000 --token=$KE_TOKEN --kubeedge-version=v1.13.0 --remote-runtime-endpoint=unix:///var/run/containerd/containerd.sock --runtimetype=remote --cgroupdriver=cgroupfs
+
+# -- Configure Edgecore to connect to MQTT-Client on Cloudside
+# Note: Configs for Edgecore are stored in /etc/kubeedge/config/edgecore.yaml => restart service to apply
+sed -i "s/mqttServerExternal: .*/mqttServerExternal: tcp:\/\/$CLOUDSIDE_IP:1883/g; s/mqttServerInternal: .*/mqttServerInternal: tcp:\/\/$CLOUDSIDE_IP:1883/g" /etc/kubeedge/config/edgecore.yaml
+
+echo "\nScript: done."
