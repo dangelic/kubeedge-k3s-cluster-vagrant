@@ -59,4 +59,10 @@ keadm join --cloudcore-ipport=$CLOUDSIDE_IP:10000 --token=$KE_TOKEN --kubeedge-v
 # Note: Configs for Edgecore are stored in /etc/kubeedge/config/edgecore.yaml => restart service to apply
 sed -i "s/mqttServerExternal: .*/mqttServerExternal: tcp:\/\/$CLOUDSIDE_IP:1883/g; s/mqttServerInternal: .*/mqttServerInternal: tcp:\/\/$CLOUDSIDE_IP:1883/g" /etc/kubeedge/config/edgecore.yaml
 
+-- Enable edge-to-edge (to cloud) communication via MQTT-Client
+# Subscribe to the communication topic and run a background script to store data published to this topic
+# TODO: Refactor - store data in a DB.
+OUTPUT_FILE=demo-message-storage.txt
+nohup mosquitto_sub -h 10.21.0.101 -t edge-to-edge  >> "$OUTPUT_FILE" 2>&1 &
+
 echo "\nScript: done."
