@@ -59,7 +59,7 @@ git clone https://github.com/kubeedge/edgemesh.git
 kubectl apply -f edgemesh/build/crds/istio/
 kubectl apply -f edgemesh/build/agent/resources/
 
-# -- Setup MQTT-Client Cloudside as Middleware in edge-cloud-edge communication
+# -- Setup MQTT-Client Cloudside as Middleware in edge-to-edge (and to cloud) communication
 
 sudo add-apt-repository -y ppa:mosquitto-dev/mosquitto-ppa
 sudo apt install -y mosquitto mosquitto-clients
@@ -69,5 +69,8 @@ sudo cat /etc/mosquitto/mosquitto.conf >> bind_address 10.21.0.101
 # Allow traffic from Edge Nodes without auth
 sudo cat /etc/mosquitto/mosquitto.conf >> allow_anonymous true
 sudo systemctl restart mosquitto
+
+# Add a topic for edge-to-edge (and to cloud) communication
+mosquitto_sub -h $CLOUDSIDE_IP -p 1883 -t edge-to-edge
 
 echo "\nScript: done."
