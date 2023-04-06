@@ -21,7 +21,7 @@ sudo ufw disable
 
 sudo apt-get update
 
-# -- Setup K3s Cluster in v1.22.5
+# -- Setup K3s Cluster in v1.23.5
 
 # Get installer tool for K3s and run it
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.23.5+k3s1" K3S_TOKEN="leipzig" sh -
