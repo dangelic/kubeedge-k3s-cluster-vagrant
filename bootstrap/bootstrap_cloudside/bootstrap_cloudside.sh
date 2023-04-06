@@ -67,11 +67,11 @@ iptables -t nat -A OUTPUT -p tcp --dport 10350 -j DNAT --to $CLOUDCOREIPS:10003
 
 sudo add-apt-repository -y ppa:mosquitto-dev/mosquitto-ppa
 sudo apt install -y mosquitto mosquitto-clients
-mosquitto --version
+
 # Set bind-adress to public ip instead of localhost
-sudo cat /etc/mosquitto/mosquitto.conf >> bind_address 10.21.0.101
+sudo echo "bind_address $CLOUDSIDE_IP" >> /etc/mosquitto/mosquitto.conf
 # Allow traffic from Edge Nodes without auth
-sudo cat /etc/mosquitto/mosquitto.conf >> allow_anonymous true
+sudo echo "allow_anonymous true" >> /etc/mosquitto/mosquitto.conf
 sudo systemctl restart mosquitto
 
 # Add a topic for edge-to-edge (and to cloud) communication
