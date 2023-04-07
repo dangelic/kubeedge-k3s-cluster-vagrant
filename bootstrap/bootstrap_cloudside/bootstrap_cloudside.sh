@@ -17,6 +17,7 @@ while [ $# -gt 0 ]; do
 done
 
 # Disable firewall for testing
+# NOTE: A restart might be necessary
 sudo ufw disable
 
 sudo apt-get update
@@ -47,6 +48,7 @@ keadm init --advertise-address=$CLOUDSIDE_IP --profile version=v1.13.0 --kube-co
 echo "Sleep 20..."
 sleep 20
 
+# Get the token to join Edgecore
 keadm gettoken > ketoken.txt
 echo "*** KubeEdge token ***"
 cat ketoken.txt
