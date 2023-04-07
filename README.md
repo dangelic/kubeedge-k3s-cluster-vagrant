@@ -19,7 +19,7 @@
 Clone this repository and navigate into root directory:
 
 ```
-$ cd kubeedge-k3s-vagrant
+$ cd kubeedge-k3s-cluster-vagrant
 ```
 
 Rename the cluster outline sample directory and configure further to adust the default VM config:
