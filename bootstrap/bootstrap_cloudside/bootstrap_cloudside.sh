@@ -43,7 +43,13 @@ tar -zxvf keadm-v1.13.0-linux-amd64.tar.gz
 cp keadm-v1.13.0-linux-amd64/keadm/keadm /usr/local/bin/keadm
 
 # Initialize Cloudcore with Keadm
-keadm init --advertise-address=$CLOUDSIDE_IP --profile version=v1.13.0 --kube-config=/root/.kube/config
+# NOTE: dynamicController.enable=true is important for EdgeMesh enablement
+# REF: https://edgemesh.netlify.app/guide/edge-kube-api.html#quick-start
+keadm init \ 
+--advertise-address=$CLOUDSIDE_IP \ 
+--profile version=v1.13.0 \ 
+--kube-config=/root/.kube/config \
+--set cloudCore.modules.dynamicController.enable=true
 
 echo "Sleep 20..."
 sleep 20
