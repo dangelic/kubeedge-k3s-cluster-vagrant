@@ -26,11 +26,6 @@ done
 
 sudo su
 
-# Get HELM
-curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-chmod 700 get_helm.sh
-./get_helm.sh
-
 # Generate PSK-Cypher and save it in .txt
 # REF: https://edgemesh.netlify.app/guide/security.html#generate-psk-cipher
 openssl rand -base64 32 >> psk_cypher.txt

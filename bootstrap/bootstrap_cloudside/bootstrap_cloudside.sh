@@ -35,6 +35,11 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
+# Get HELM
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+
 # -- Setup KubeEdge in v1.13.0
 
 # Get Keadm as installer tool for KubeEdge
@@ -45,11 +50,7 @@ cp keadm-v1.13.0-linux-amd64/keadm/keadm /usr/local/bin/keadm
 # Initialize Cloudcore with Keadm
 # NOTE: dynamicController.enable=true is important for EdgeMesh enablement
 # REF: https://edgemesh.netlify.app/guide/edge-kube-api.html#quick-start
-keadm init \ 
---advertise-address=$CLOUDSIDE_IP \ 
---profile version=v1.13.0 \ 
---kube-config=/root/.kube/config \
---set cloudCore.modules.dynamicController.enable=true
+keadm init --advertise-address=$CLOUDSIDE_IP --profile version=v1.13.0 --kube-config=/root/.kube/config --set cloudCore.modules.dynamicController.enable=true
 
 echo "Sleep 20..."
 sleep 20
