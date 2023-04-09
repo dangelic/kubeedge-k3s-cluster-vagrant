@@ -59,13 +59,14 @@ keadm gettoken > ketoken.txt
 echo "*** KubeEdge token ***"
 cat ketoken.txt
 
-# -- Setup EdgeMesh
+# NOTE: EdgeMesh setup is outsourced in /edgemesh dir
+# # -- Setup EdgeMesh
 
-# Refer: https://edgemesh.netlify.app/guide/#manual-install
-# Test: https://edgemesh.netlify.app/guide/test-case.html#cross-edge-cloud
-git clone https://github.com/kubeedge/edgemesh.git
-kubectl apply -f edgemesh/build/crds/istio/
-kubectl apply -f edgemesh/build/agent/resources/
+# # Refer: https://edgemesh.netlify.app/guide/#manual-install
+# # Test: https://edgemesh.netlify.app/guide/test-case.html#cross-edge-cloud
+# git clone https://github.com/kubeedge/edgemesh.git
+# kubectl apply -f edgemesh/build/crds/istio/
+# kubectl apply -f edgemesh/build/agent/resources/
 
 # -- Setup tunnel for Edgeside port
 export CLOUDCOREIPS=$CLOUDSIDE_IP
