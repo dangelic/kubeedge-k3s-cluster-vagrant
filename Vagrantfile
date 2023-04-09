@@ -77,7 +77,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
         node.vm.provision "file", source: "manifests", destination: "$HOME/manifests" # Manifests to use in shell scripts to apply at cluster
         node.vm.provision "file", source: "tmp", destination: "$HOME/tmp" # Secrets
         node.vm.provision "file", source: "sh/sh_cloudside", destination: "$HOME/sh/sh_cloudside" # Scripts to apply additional resources 
-        node.vm.provision "file", source: "gitOps", destination: "$HOME/gitOps" # GitOps with ArgoCD
+        node.vm.provision "file", source: "GitOps", destination: "$HOME/gitOps" # GitOps with ArgoCD
         node.vm.provision "file", source: "edgemesh", destination: "$HOME/edgemesh_installation" # EdgeMesh
 
         node.vm.provider "virtualbox" do |v|
