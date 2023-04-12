@@ -5,12 +5,15 @@ require "json"
 ENV["VAGRANT_NO_PARALLEL"] = "yes"
 
 # --- Define the machines: 
+    # 1 MQTT Server (Middleware)
     # 1 Rancher Server
     # 1 Master-Node -> Cloudside running Cloudcore
     # n Worker-Node(s) -> Edgeside running Edgecore
+mqtt_server_vm_config = JSON.parse(File.read("./vm_cluster_outline/mqtt_server_vm_config.json"))
 rancher_vm_config= JSON.parse(File.read("./vm_cluster_outline/rancher_vm_config.json"))
 cloudside_vm_config = JSON.parse(File.read("./vm_cluster_outline/cloudside_vm_config.json"))
 edgeside_vm_config = JSON.parse(File.read("./vm_cluster_outline/edgeside_vm_config.json"))
+
 
 Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
 
@@ -19,6 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
 	config.env.enable # Enable vagrant-env(./.env)
 
     # --- ENVs to be set in .env (required). Rename .env-sample to .env to get the default config
+    VM_BOX_OS_MQTT_SERVER	= ENV["VM_BOX_OS_MQTT_SERVER"]
     VM_BOX_OS_RANCHERSERVER = ENV["VM_BOX_OS_RANCHERSERVER"]
     VM_BOX_OS_CLOUDNODE		= ENV["VM_BOX_OS_CLOUDNODE"]
     VM_BOX_OS_EDGENODE		= ENV["VM_BOX_OS_EDGENODE"]
@@ -36,6 +40,31 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
           system "vagrant plugin install #{plugin}"
         else
           puts "#{plugin} plugin is already installed."
+        end
+    end
+
+    # --- Provisions 1 MQTT Server.
+    config.vm.define "#{mqtt_server_vm_config[0]["vname"]}" do |node|
+        node.vm.box = VM_BOX_OS_MQTT_SERVER
+        node.vm.hostname = "#{mqtt_server_vm_config[0]["hostname"]}.#{DOMAIN}"
+        node.vm.network :private_network, ip: mqtt_server_vm_config[0]["ip"]
+        node.vm.network :forwarded_port, guest: 8080, host: 10080
+
+        # Setup dir sync for MQTT Server.
+        node.vm.provision "file", source: "bootstrap/bootstrap_mqtt_server", destination: "$HOME/bootstrap/bootstrap_mqtt_server" # Setup
+        node.vm.provision "file", source: "tmp", destination: "$HOME/tmp" # Secrets
+        node.vm.provision "file", source: "sh/sh_mqtt_server", destination: "$HOME/sh/sh_mqtt_server" # Scripts to apply additional resources 
+
+        node.vm.provider "virtualbox" do |v|
+            v.name = "#{mqtt_server_vm_config[0]["hostname"]}#{VM_ALIAS_SUFFIX}"
+            v.memory = mqtt_server_vm_config[0]["mem"]
+            v.cpus = mqtt_server_vm_config[0]["cpu"]
+        end
+
+        node.vm.provision "hosts" do |hosts|
+            hosts.autoconfigure = true
+            hosts.sync_hosts = true
+            hosts.add_localhost_hostnames = false
         end
     end
 
@@ -113,7 +142,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
 				v.name = "#{edgeside_vm_config[edgenode-1]["hostname"]}#{VM_ALIAS_SUFFIX}"
 				v.memory = edgeside_vm_config[edgenode-1]["mem"]
 				v.cpus = edgeside_vm_config[edgenode-1]["cpu"]
-				v.gui = edgeside_vm_config[edgenode-1]["gui_enabled"]
 			end
 
 			node.vm.provision "hosts" do |hosts|

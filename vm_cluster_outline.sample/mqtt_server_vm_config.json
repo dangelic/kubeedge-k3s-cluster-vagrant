@@ -1,0 +1,9 @@
+[
+    {
+        "vname": "mqtt-server-dev",
+        "hostname": "mqtt-server-dev",
+        "mem": 1024,
+        "cpu": 2,
+        "ip": "10.21.0.300"
+    }
+]
