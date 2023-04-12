@@ -1,6 +1,8 @@
 #!/bin/bash
 
+# NOTE: Execute setup_edgemesh_edgeside.sh on Edge Node first! If the order is misplaced, run the HELM install part in this script again to fix this.
 # Execute script with: $ sh setup_edgemesh_cloudside.sh --cloudside-ip=<the IP of the Cloudcore> --relay-node-name=<The Cloudside Node name (e.g. kube-cloudcore)>
+
 
 CLOUDSIDE_IP=""
 RELAY_NODE_NAME=""
