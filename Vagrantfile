@@ -48,7 +48,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
         node.vm.box = VM_BOX_OS_MQTT_SERVER
         node.vm.hostname = "#{mqtt_server_vm_config[0]["hostname"]}.#{DOMAIN}"
         node.vm.network :private_network, ip: mqtt_server_vm_config[0]["ip"]
-        node.vm.network :forwarded_port, guest: 8080, host: 10080
+        node.vm.network :forwarded_port, guest: 8080, host: 12080
 
         # Setup dir sync for MQTT Server.
         node.vm.provision "file", source: "bootstrap/bootstrap_mqtt_server", destination: "$HOME/bootstrap/bootstrap_mqtt_server" # Setup
