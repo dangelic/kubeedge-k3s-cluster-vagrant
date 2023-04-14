@@ -27,8 +27,6 @@ done
 # NOTE: With the keadm init command in bootstrap_cloudside.sh, the basic adjustment for EdgeMesh for Cloudside is made
 # REF: https://edgemesh.netlify.app/guide/edge-kube-api.html#quick-start
 
-sudo su
-
 # Generate PSK-Cypher and save it in .txt
 # REF: https://edgemesh.netlify.app/guide/security.html#generate-psk-cipher
 openssl rand -base64 32 >> psk_cypher.txt
