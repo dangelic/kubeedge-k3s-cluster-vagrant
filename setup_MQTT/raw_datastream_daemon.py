@@ -6,7 +6,7 @@ import threading
 # MQTT settings
 MQTT_BROKER = "10.21.0.199" 
 MQTT_PORT = 1883 
-MQTT_TOPIC = "sensor-stream"  
+MQTT_TOPIC = "sensor-stream-converted"  
  
 # PostgreSQL settings
 DB_HOST = "localhost" 
@@ -60,4 +60,4 @@ client.loop_start()
  
 # Keep the main thread alive
 while True:
-    continue
+    continue 
