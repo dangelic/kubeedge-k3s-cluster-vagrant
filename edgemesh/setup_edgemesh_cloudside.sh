@@ -117,7 +117,7 @@ spec:
           image: kubeedge/edgemesh-gateway:v1.13.2
           imagePullPolicy: IfNotPresent
           env:
-            - name: NODE_NAME
+            - name: $RELAY_NODE_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
