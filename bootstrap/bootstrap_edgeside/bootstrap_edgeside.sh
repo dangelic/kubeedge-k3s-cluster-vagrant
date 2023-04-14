@@ -70,6 +70,6 @@ sudo systemctl restart edgecore
 # TODO: Refactor - store data in a DB.
 OUTPUT_FILE=demo-message-storage.txt
 TOPIC="inter-communication"
-nohup mosquitto_sub -h MQTT_SERVER_IP -t $TOPIC  >> "$OUTPUT_FILE" 2>&1 &
+nohup mosquitto_sub -h $MQTT_SERVER_IP -t $TOPIC  >> "$OUTPUT_FILE" 2>&1 &
 
 echo "\nScript: done."
