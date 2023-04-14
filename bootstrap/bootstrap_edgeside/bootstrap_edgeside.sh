@@ -2,6 +2,7 @@
 
 CLOUDSIDE_IP=""
 KE_TOKEN=""
+MQTT_SERVER_IP=""
 
 # Parse args
 while [ $# -gt 0 ]; do
@@ -11,6 +12,9 @@ while [ $# -gt 0 ]; do
       ;;
     --ke-token=*)
       KE_TOKEN="${1#*=}"
+      ;;
+    --mqtt-server-ip=*)
+      MQTT_SERVER_IP="${1#*=}"
       ;;
     *)
       echo "Error: Invalid argument: $1"
@@ -58,13 +62,14 @@ keadm join --cloudcore-ipport=$CLOUDSIDE_IP:10000 --token=$KE_TOKEN --kubeedge-v
 
 # -- Configure Edgecore to connect to MQTT-Client on Cloudside
 # NOTE: Configs for Edgecore are stored in /etc/kubeedge/config/edgecore.yaml => restart service to apply
-sed -i "s/mqttServerExternal: .*/mqttServerExternal: tcp:\/\/$CLOUDSIDE_IP:1883/g; s/mqttServerInternal: .*/mqttServerInternal: tcp:\/\/$CLOUDSIDE_IP:1883/g" /etc/kubeedge/config/edgecore.yaml
+sed -i "s/mqttServerExternal: .*/mqttServerExternal: tcp:\/\/MQTT_SERVER_IP:1883/g; s/mqttServerInternal: .*/mqttServerInternal: tcp:\/\/MQTT_SERVER_IP:1883/g" /etc/kubeedge/config/edgecore.yaml
 sudo systemctl restart edgecore
 
 # -- Enable edge-to-edge (to cloud) communication via MQTT-Client
 # Subscribe to the communication topic and run a background script to store data published to this topic
 # TODO: Refactor - store data in a DB.
 OUTPUT_FILE=demo-message-storage.txt
-nohup mosquitto_sub -h 10.21.0.101 -t edge-to-edge  >> "$OUTPUT_FILE" 2>&1 &
+TOPIC="inter-communication"
+nohup mosquitto_sub -h MQTT_SERVER_IP -t $TOPIC  >> "$OUTPUT_FILE" 2>&1 &
 
 echo "\nScript: done."
