@@ -4,6 +4,6 @@
         "hostname": "mqtt-server-dev",
         "mem": 1024,
         "cpu": 2,
-        "ip": "10.21.0.300"
+        "ip": "10.21.0.199"
     }
 ]
