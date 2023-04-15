@@ -2,10 +2,12 @@
 
 # Install PostgresDB
 sudo apt install wget ca-certificates
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+wget -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
 sudo apt update
-apt install postgresql postgresql-contrib
+apt install -y postgresql postgresql-contrib
+
+sudo -u postgres psql
 
 # Define the new password for the postgres user
 NEW_PASSWORD="postgres"
@@ -20,7 +22,7 @@ else
 fi
 
 # Define the database name
-DB_NAME="mqtt"
+DB_NAME="machine_sensor_data"
 
 # Define the create database SQL statement
 CREATE_DB_SQL="CREATE DATABASE $DB_NAME;"
