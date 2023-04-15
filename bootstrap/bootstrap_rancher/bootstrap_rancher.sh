@@ -14,7 +14,9 @@ export RANCHER_VERSION="2.7.0" # Tested.
 sudo apt-get install -y podman
 
 # Add Docker.io registry to pull Rancher image
-echo "[registries.search]\nregistries = ['docker.io']" | sudo tee -a /etc/containers/containers.conf
+echo "
+[registries.search]
+registries = ['docker.io']" | sudo tee -a /etc/containers/registries.conf
 
 # Modified command
 sudo podman run -d --restart=unless-stopped \
