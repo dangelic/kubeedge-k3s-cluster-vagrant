@@ -86,7 +86,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
             v.name = "#{rancher_vm_config[0]["hostname"]}#{VM_ALIAS_SUFFIX}"
             v.memory = rancher_vm_config[0]["mem"]
             v.cpus = rancher_vm_config[0]["cpu"]
-            v.gui = rancher_vm_config[0]["gui_enabled"]
+            v.gui = true
         end
 
         node.vm.provision "hosts" do |hosts|
