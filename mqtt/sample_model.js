@@ -1,9 +1,10 @@
 const mqtt = require('mqtt');
 
 // MQTT Broker URL
-const brokerUrl = 'mqtt://localhost:1883';
+
+const brokerUrl = process.env.BROKER_URL || 'mqtt://localhost:1883';
 // MQTT Topic to subscribe to
-const topic = 'edgedevice-datastream/machine-1/sensor-collection';
+const topic = process.env.TOPIC || 'edgedevice-datastream/machine-1/sensor-collection';
 // Maximum values for each sensor
 const maxValues = {
   temperature: 400,
