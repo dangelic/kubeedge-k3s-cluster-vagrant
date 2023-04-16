@@ -1,3 +1,4 @@
 .env
 .vagrant
 /vm_cluster_outline
+/mqtt/node_modules
