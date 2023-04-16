@@ -44,57 +44,57 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
     end
 
     # --- Provisions 1 MQTT Server.
-    config.vm.define "#{mqtt_server_vm_config[0]["vname"]}" do |node|
-        node.vm.box = VM_BOX_OS_MQTT_SERVER
-        node.vm.hostname = "#{mqtt_server_vm_config[0]["hostname"]}.#{DOMAIN}"
-        node.vm.network :private_network, ip: mqtt_server_vm_config[0]["ip"]
-        node.vm.network :forwarded_port, guest: 8080, host: 13080
+    # config.vm.define "#{mqtt_server_vm_config[0]["vname"]}" do |node|
+    #     node.vm.box = VM_BOX_OS_MQTT_SERVER
+    #     node.vm.hostname = "#{mqtt_server_vm_config[0]["hostname"]}.#{DOMAIN}"
+    #     node.vm.network :private_network, ip: mqtt_server_vm_config[0]["ip"]
+    #     node.vm.network :forwarded_port, guest: 8080, host: 13080
 
-        # Setup dir sync for MQTT Server.
-        node.vm.provision "file", source: "bootstrap/bootstrap_mqtt_server", destination: "$HOME/bootstrap/bootstrap_mqtt_server" # Setup
-        node.vm.provision "file", source: "tmp", destination: "$HOME/tmp" # Secrets
-        node.vm.provision "file", source: "sh/sh_mqtt_server", destination: "$HOME/sh/sh_mqtt_server" # Scripts to apply additional resources
-        node.vm.provision "file", source: "mqtt", destination: "mqtt" # Scripts to apply additional resources
+    #     # Setup dir sync for MQTT Server.
+    #     node.vm.provision "file", source: "bootstrap/bootstrap_mqtt_server", destination: "$HOME/bootstrap/bootstrap_mqtt_server" # Setup
+    #     node.vm.provision "file", source: "tmp", destination: "$HOME/tmp" # Secrets
+    #     node.vm.provision "file", source: "sh/sh_mqtt_server", destination: "$HOME/sh/sh_mqtt_server" # Scripts to apply additional resources
+    #     node.vm.provision "file", source: "mqtt", destination: "mqtt" # Scripts to apply additional resources
 
-        node.vm.provider "virtualbox" do |v|
-            v.name = "#{mqtt_server_vm_config[0]["hostname"]}#{VM_ALIAS_SUFFIX}"
-            v.memory = mqtt_server_vm_config[0]["mem"]
-            v.cpus = mqtt_server_vm_config[0]["cpu"]
-        end
+    #     node.vm.provider "virtualbox" do |v|
+    #         v.name = "#{mqtt_server_vm_config[0]["hostname"]}#{VM_ALIAS_SUFFIX}"
+    #         v.memory = mqtt_server_vm_config[0]["mem"]
+    #         v.cpus = mqtt_server_vm_config[0]["cpu"]
+    #     end
 
-        node.vm.provision "hosts" do |hosts|
-            hosts.autoconfigure = true
-            hosts.sync_hosts = true
-            hosts.add_localhost_hostnames = false
-        end
-    end
+    #     node.vm.provision "hosts" do |hosts|
+    #         hosts.autoconfigure = true
+    #         hosts.sync_hosts = true
+    #         hosts.add_localhost_hostnames = false
+    #     end
+    # end
 
-	# --- Provisions 1 Rancher Server.
-    config.vm.define "#{rancher_vm_config[0]["vname"]}" do |node|
-        node.vm.box = VM_BOX_OS_RANCHERSERVER
-        node.vm.hostname = "#{rancher_vm_config[0]["hostname"]}.#{DOMAIN}"
-        node.vm.network :private_network, ip: rancher_vm_config[0]["ip"]
-        node.vm.network :forwarded_port, guest: 8080, host: 10080
+	# # --- Provisions 1 Rancher Server.
+    # config.vm.define "#{rancher_vm_config[0]["vname"]}" do |node|
+    #     node.vm.box = VM_BOX_OS_RANCHERSERVER
+    #     node.vm.hostname = "#{rancher_vm_config[0]["hostname"]}.#{DOMAIN}"
+    #     node.vm.network :private_network, ip: rancher_vm_config[0]["ip"]
+    #     node.vm.network :forwarded_port, guest: 8080, host: 10080
 
-        # Setup dir sync for Rancher Server.
-        node.vm.provision "file", source: "bootstrap/bootstrap_rancher", destination: "$HOME/bootstrap/bootstrap_rancher" # Setup
-        node.vm.provision "file", source: "tmp", destination: "$HOME/tmp" # Secrets
-        node.vm.provision "file", source: "sh/sh_rancher", destination: "$HOME/sh/sh_rancher" # Scripts to apply additional resources
-        node.vm.provision "file", source: "mqtt", destination: "mqtt" # Scripts to apply additional resources
+    #     # Setup dir sync for Rancher Server.
+    #     node.vm.provision "file", source: "bootstrap/bootstrap_rancher", destination: "$HOME/bootstrap/bootstrap_rancher" # Setup
+    #     node.vm.provision "file", source: "tmp", destination: "$HOME/tmp" # Secrets
+    #     node.vm.provision "file", source: "sh/sh_rancher", destination: "$HOME/sh/sh_rancher" # Scripts to apply additional resources
+    #     node.vm.provision "file", source: "mqtt", destination: "mqtt" # Scripts to apply additional resources
 
-        node.vm.provider "virtualbox" do |v|
-            v.name = "#{rancher_vm_config[0]["hostname"]}#{VM_ALIAS_SUFFIX}"
-            v.memory = rancher_vm_config[0]["mem"]
-            v.cpus = rancher_vm_config[0]["cpu"]
-            v.gui = true
-        end
+    #     node.vm.provider "virtualbox" do |v|
+    #         v.name = "#{rancher_vm_config[0]["hostname"]}#{VM_ALIAS_SUFFIX}"
+    #         v.memory = rancher_vm_config[0]["mem"]
+    #         v.cpus = rancher_vm_config[0]["cpu"]
+    #         v.gui = true
+    #     end
 
-        node.vm.provision "hosts" do |hosts|
-            hosts.autoconfigure = true
-            hosts.sync_hosts = true
-            hosts.add_localhost_hostnames = false
-        end
-    end
+    #     node.vm.provision "hosts" do |hosts|
+    #         hosts.autoconfigure = true
+    #         hosts.sync_hosts = true
+    #         hosts.add_localhost_hostnames = false
+    #     end
+    # end
 
 	# --- Provisions 1 Master-Node -> Cloudside running Cloudcore.
     config.vm.define "#{cloudside_vm_config[0]["vname"]}" do |node|
