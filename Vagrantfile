@@ -135,6 +135,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
 			node.vm.hostname = "#{edgeside_vm_config[edgenode-1]["hostname"]}.#{DOMAIN}"
 			node.vm.network :private_network, ip: edgeside_vm_config[edgenode-1]["ip"]
 			node.vm.network :forwarded_port, guest: 8080, host: 12080+edgenode-1
+            node.vm.network :forwarded_port, guest: 1880 , host: 1880+edgenode-1
 
             # Setup dir sync for Edgeside.
             node.vm.provision "file", source: "bootstrap_edgeside", destination: "$HOME/bootstrap_edgeside" # Cluster bootstrap
