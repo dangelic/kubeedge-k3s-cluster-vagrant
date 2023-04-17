@@ -20,10 +20,10 @@ spec:
     spec:
       hostNetwork: false
       nodeSelector:
-        kubernetes.io/hostname: kube-edgecore1-min # Set the node selector to specify the node
+        kubernetes.io/hostname: <NAME OF NODE> # Set the node selector to specify the node
       containers:
       - name: demo-webserver
         # For demonstration, change the :state-1 tag to :state-2
         # ArgoCD should manage the new desired state and automatically deploy>
-        image: docker.io/dangelic/edgecluster-prototype-dockerhub-registry:state-1
+        image: docker.io/dangelic/edgecluster-prototype-dockerhub-registry:example-webserver-v-1
         ports: 3555
