@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo-webserver
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-webserver-deployment
+  namespace: demo-webserver
+spec:
+  selector:
+    matchLabels:
+      app: demo-webserver
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: demo-webserver
+    spec:
+      hostNetwork: false
+      nodeSelector:
+        kubernetes.io/hostname: kube-edgecore1-min # Set the node selector to specify the node
+      containers:
+      - name: demo-webserver
+        # For demonstration, change the :state-1 tag to :state-2
+        # ArgoCD should manage the new desired state and automatically deploy>
+        image: docker.io/dangelic/edgecluster-prototype-dockerhub-registry:state-1
+        ports: 3555

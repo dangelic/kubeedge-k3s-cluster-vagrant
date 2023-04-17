@@ -17,43 +17,36 @@ const thresholdPercentage = 20;
 
 // ASCII art title for Anomaly
 var asciiTitle = `
-  _____  _               _           _                    
- |  __ \\\| |             (_)         | |                   
- | |__) | |__  _   _ ___ _  ___ __ _| |                   
- |  ___/| '_ \\| | | / __| |/ __/ _\` | |                   
- | |    | | | | |_| \\__ | | (_| (_| | |                   
- |_|    |_| |_\\__,  |___|_ \\___\\__,_|_|                   
-                __/ |                                     
-               |___/                                      
-  __  __           _      _   _____  ______ __  __  ____  
- |  \\\/  |         | |    | | |  __ \\\/  ____|  \\\/  |/ __ \\ 
- | \\  / | ___   __| | ___| | | |  | | |__  | \\  / | |  | |
- | |\\/| |/ _ \\ / _\` |/ _ | | | |  | |  __| | |\\/| | |  | |
- | |  | | (_) | (_| |  __| | | |__| | |____| |  | | |__| |
- |_|  |_|\\___/ \\__,_|\\___|_| |_____/|______|_|  |_|\\____/ 
-          __       ___         ___                        
-         /_ |     / _ \        / _ \\                       
- __   __  | |    | | | |     | | | |                      
- \\ \\ / /  | |    | | | |     | | | |                      
-  \\ V /   | |_   | |_| |  _  | |_| |                      
-   \\_/    |_(_)   \\___/  (_)  \\___/                       
+     ____  __               _            __   __  ___          __     __
+    / __ \\/ /_  __  _______(_)________ _/ /  /  |/  /___  ____/ /__  / /
+   / /_/ / __ \\/ / / / ___/ / ___/ __ \`/ /  / /|_/ / __ \\/ __  / _ \\/ /
+  / ____/ / / / /_/ (__  ) / /__/ /_/ / /  / /  / / /_/ / /_/ /  __/ /
+ /_/   /_/ /_/\\__, /____/_/\\___/\\__,_/_/  /_/  /_/\\____/\\__,_/\\___/_/
+             /____/
+
+   _____                       __              ____   ____   ___
+  / ___/____ _____ ___  ____  / /__     _   __/ __ \\/ __ \\/ <  /
+  \\__ \\/ __ \`/ __ \\__ \\/ __ \\/ / _ \\   | | / / / / // / / / / /
+ ___/ / /_/ / / / / / / /_/ / /  __/   | |/ / /_/ // /_/ / / /
+/____/\\__,_/_/ /_/ /_/\ ___/_/\\___/     |___/\\____(_)____(_)_/
+                    /_/    
 `;
 
 
 
 // Server version number
-const serverVersion = '1.0.0';
+const serverVersion = '0.0.1';
 
 // Display max values and threshold percentage
 console.log(asciiTitle);
 console.log(`Server Version: ${serverVersion}`);
-console.log('Max Values:');
+console.log('Max Values are set to:');
 for (const sensor in maxValues) {
   if (maxValues.hasOwnProperty(sensor)) {
     console.log(`- ${sensor}: ${maxValues[sensor]}`);
   }
 }
-console.log(`Threshold Percentage: ${thresholdPercentage}%`);
+console.log(`Threshold Percentage is set to: ${thresholdPercentage}%`);
 
 // Create MQTT client
 const client = mqtt.connect(brokerUrl);
