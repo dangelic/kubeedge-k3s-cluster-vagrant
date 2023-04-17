@@ -30,11 +30,6 @@ sudo ufw disable
 
 sudo apt-get update
 
-# Install setup tools
-sudo apt-get install -y net-tools
-sudo apt-get install -y nodejs
-sudo apt-get install -y npm
-
 # -- Install containerd as CRI for Edgeside
 
 export VERSION_CONTAINERD=1.4.3
