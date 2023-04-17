@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       labels:
-        app: demo-webserver
+        app: sample-physical-model
     spec:
       hostNetwork: true # NOTE!
       nodeSelector:
@@ -28,6 +28,6 @@ spec:
         - containerPort: 1883
         env:
         - name: BROKER_URL
-          value: "<BROKER URL>" # Set the value of BROKER_URL to the Broker URL
+          value: "<mqtt://localhost:8080 or specific>" # Set the value of BROKER_URL to the Broker URL
         - name: TOPIC
           value: "<TOPIC>" # Set the value of TOPIC to your actual topic
