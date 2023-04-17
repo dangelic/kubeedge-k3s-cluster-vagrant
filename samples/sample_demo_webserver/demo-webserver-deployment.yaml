@@ -18,7 +18,7 @@ spec:
       labels:
         app: demo-webserver
     spec:
-      hostNetwork: false
+      hostNetwork: true
       nodeSelector:
         kubernetes.io/hostname: <NAME OF NODE> # Set the node selector to specify the node
       containers:
@@ -26,4 +26,5 @@ spec:
         # For demonstration, change the :state-1 tag to :state-2
         # ArgoCD should manage the new desired state and automatically deploy>
         image: docker.io/dangelic/edgecluster-prototype-dockerhub-registry:example-webserver-v-1
-        ports: 3555
+        ports:
+        - containerPort: 3555
