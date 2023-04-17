@@ -28,5 +28,5 @@ sudo echo "allow_anonymous true" >> /etc/mosquitto/mosquitto.conf
 sudo systemctl restart mosquitto
 
 # Add a topic for edge-to-edge (and to cloud) communication
-TOPIC="sensor-stream-converted"
-mosquitto_sub -h $MQTT_SERVER_IP -p 1883 -t $TOPIC
+# TOPIC="sensor-stream-converted"
+# mosquitto_sub -h $MQTT_SERVER_IP -p 1883 -t $TOPIC
