@@ -5,7 +5,7 @@ const app = express();
 const port = 3555;
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'assets', 'tux_v1.txt'));
+  res.sendFile(path.join(__dirname, 'assets', 'letters_v1.txt')); // Change to _v2 for demo
 });
 
 app.listen(port, () => {
