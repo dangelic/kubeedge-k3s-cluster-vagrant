@@ -30,6 +30,11 @@ sudo ufw disable
 
 sudo apt-get update
 
+# Install setup tools
+sudo apt-get install -y net-tools
+sudo apt-get install -y nodejs
+sudo apt-get install -y npm
+
 # -- Install containerd as CRI for Edgeside
 
 export VERSION_CONTAINERD=1.4.3
@@ -64,12 +69,5 @@ keadm join --cloudcore-ipport=$CLOUDSIDE_IP:10000 --token=$KE_TOKEN --kubeedge-v
 # NOTE: Configs for Edgecore are stored in /etc/kubeedge/config/edgecore.yaml => restart service to apply
 sed -i "s/mqttServerExternal: .*/mqttServerExternal: tcp:\/\/$MQTT_SERVER_IP:1883/g; s/mqttServerInternal: .*/mqttServerInternal: tcp:\/\/$MQTT_SERVER_IP:1883/g" /etc/kubeedge/config/edgecore.yaml
 sudo systemctl restart edgecore
-
-# -- Enable edge-to-edge (to cloud) communication via MQTT-Client
-# Subscribe to the communication topic and run a background script to store data published to this topic
-# TODO: Refactor - store data in a DB.
-OUTPUT_FILE=demo-message-storage.txt
-TOPIC="inter-communication"
-nohup mosquitto_sub -h $MQTT_SERVER_IP -t $TOPIC  >> "$OUTPUT_FILE" 2>&1 &
 
 echo "\nScript: done."

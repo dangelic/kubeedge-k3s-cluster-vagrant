@@ -22,6 +22,11 @@ sudo ufw disable
 
 sudo apt-get update
 
+# Install setup tools.
+sudo apt-get install -y net-tools
+sudo apt-get install -y nodejs
+sudo apt-get install -y npm
+
 # -- Setup K3s Cluster in v1.23.5
 
 # Get installer tool for K3s and run it
