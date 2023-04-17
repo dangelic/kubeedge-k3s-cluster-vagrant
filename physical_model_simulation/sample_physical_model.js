@@ -78,11 +78,12 @@ client.on('message', (downstreamTopic, message) => {
       
       // Build the JSON payload
       const payload = {
-        threshold: thresholdPercentage,
+        threshold_pct: thresholdPercentage,
         checked_value: sensor,
         max_value: maxValue,
-        deviation: diffPercentage.toFixed(2),
-        result: status
+        deviation_pct: diffPercentage.toFixed(2),
+        result: status,
+        timestamp: new Date(Date.now())
       };
       console.log(`Sensor: ${sensor}, Value: ${value}, Max Value: ${maxValue}, Difference: ${diffPercentage.toFixed(2)}%, Status: ${status}!`);
       console.log(`ACTION: Publishing check result upstream to ${upstreamTopic}:`, payload);
