@@ -1,10 +1,15 @@
+// #### Flow: 
+// downstream: sensor -> Node-RED -> MQTT Broker -> phy. Model
+// upstream: phy. Model -> MQTT Broker -> Node-RED
+
 const mqtt = require('mqtt');
 
 // MQTT Broker URL
 
 const brokerUrl = process.env.BROKER_URL || 'mqtt://localhost:1883';
 // MQTT Topic to subscribe to
-const topic = process.env.TOPIC || 'edgedevice-datastream/machine-1/sensor-collection';
+const upstreamTopic = process.env.UPSTREAM_TOPIC || 'edgedevice-datastream/machine-1/sensor-collection/upstream';
+const downstreamTopic = process.env.DOWNSTREAM_TOPIC || 'edgedevice-datastream/machine-1/sensor-collection/downstream';
 // Maximum values for each sensor
 const maxValues = {
   temperature: 400,
@@ -54,14 +59,14 @@ const client = mqtt.connect(brokerUrl);
 // MQTT client connected
 client.on('connect', () => {
   console.log('Connected to MQTT broker running on '+brokerUrl);
-  // Subscribe to topic
-  client.subscribe(topic);
+  // Subscribe to downstream topic
+  client.subscribe(downstreamTopic);
 });
 
 // MQTT message received
-client.on('message', (topic, message) => {
+client.on('message', (downstreamTopic, message) => {
   const data = JSON.parse(message.toString());
-  console.log(`Received data from ${topic}:`, data);
+  console.log(`Received downstream data from ${downstreamTopic}:`, data);
   
   // Loop through each sensor in the received data
   for (const sensor in data) {
@@ -79,13 +84,11 @@ client.on('message', (topic, message) => {
         deviation: diffPercentage.toFixed(2),
         result: status
       };
-      
       console.log(`Sensor: ${sensor}, Value: ${value}, Max Value: ${maxValue}, Difference: ${diffPercentage.toFixed(2)}%, Status: ${status}!`);
-      console.log(`ACTION: Publishing check result downstream to edgedevice-datastream/machine-1/sensor-collection:`, payload);
+      console.log(`ACTION: Publishing check result upstream to ${upstreamTopic}:`, payload);
       
-      // Send message to downstream topic
-      const downstreamTopic = 'edgedevice-datastream/machine-1/sensor-collection/downstream';
-      client.publish(downstreamTopic, JSON.stringify(payload));
+      // Send message to upstream topic
+      client.publish(upstreamTopic, JSON.stringify(payload));
     }
   }
 });
