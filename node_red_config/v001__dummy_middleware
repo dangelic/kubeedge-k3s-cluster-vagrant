@@ -1,0 +1,224 @@
+[
+    {
+        "id": "6dfc7966e94c974c",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "569523d6.ea2ce4",
+        "type": "function",
+        "z": "6dfc7966e94c974c",
+        "name": "s1_sensor_temperature",
+        "func": "msg.payload = {\n    temperature: Math.floor(Math.random() * 100),\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 180,
+        "wires": [
+            [
+                "de8eebbf.6dd47"
+            ]
+        ]
+    },
+    {
+        "id": "a59cfe8c.b025f",
+        "type": "function",
+        "z": "6dfc7966e94c974c",
+        "name": "s1_sensor_pressure",
+        "func": "msg.payload = {\n    pressure: Math.floor(Math.random() * 1000)\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 220,
+        "wires": [
+            [
+                "de8eebbf.6dd47"
+            ]
+        ]
+    },
+    {
+        "id": "de8eebbf.6dd47",
+        "type": "function",
+        "z": "6dfc7966e94c974c",
+        "name": "protocol_mapper_dummy",
+        "func": "var newPayload = {\n    temperature: msg.payload.temperature,\n    pressure: msg.payload.pressure,\n    vibration: msg.payload.vibration,\n    humidity: msg.payload.humidity\n};\nmsg.payload = newPayload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 240,
+        "wires": [
+            [
+                "e539987a.1f215",
+                "673236ae5c35c4e4"
+            ]
+        ]
+    },
+    {
+        "id": "e539987a.1f215",
+        "type": "mqtt out",
+        "z": "6dfc7966e94c974c",
+        "name": "MQTT_downstream",
+        "topic": "edgedevice-datastream/machine-1/sensor-collection/downstream",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b4d506b3.8b31e8",
+        "x": 1370,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "fcf00e96.8cf2a",
+        "type": "inject",
+        "z": "6dfc7966e94c974c",
+        "name": "Trigger_5s",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 270,
+        "y": 240,
+        "wires": [
+            [
+                "569523d6.ea2ce4",
+                "a59cfe8c.b025f",
+                "893ac00e6584d818",
+                "9348b4c2d4d1357e"
+            ]
+        ]
+    },
+    {
+        "id": "893ac00e6584d818",
+        "type": "function",
+        "z": "6dfc7966e94c974c",
+        "name": "s1_sensor_vibration",
+        "func": "msg.payload = {\n    vibration: Math.floor(Math.random() * 100),\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 260,
+        "wires": [
+            [
+                "de8eebbf.6dd47"
+            ]
+        ]
+    },
+    {
+        "id": "9348b4c2d4d1357e",
+        "type": "function",
+        "z": "6dfc7966e94c974c",
+        "name": "s1_sensor_humidity",
+        "func": "msg.payload = {\n    humidity: Math.floor(Math.random() * 1000)\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 300,
+        "wires": [
+            [
+                "de8eebbf.6dd47"
+            ]
+        ]
+    },
+    {
+        "id": "483bec77de6f6d36",
+        "type": "comment",
+        "z": "6dfc7966e94c974c",
+        "name": "Downstream Machine->Model",
+        "info": "",
+        "x": 720,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "673236ae5c35c4e4",
+        "type": "postgres",
+        "z": "6dfc7966e94c974c",
+        "name": "",
+        "output": false,
+        "outputs": 0,
+        "x": 1380,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "cdd8f4ae1c32216e",
+        "type": "mqtt in",
+        "z": "6dfc7966e94c974c",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 360,
+        "wires": [
+            [
+                "bc3206c09723da24"
+            ]
+        ]
+    },
+    {
+        "id": "bc3206c09723da24",
+        "type": "postgres",
+        "z": "6dfc7966e94c974c",
+        "name": "",
+        "output": false,
+        "outputs": 0,
+        "x": 700,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "b4d506b3.8b31e8",
+        "type": "mqtt-broker",
+        "name": "Localhost",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]
