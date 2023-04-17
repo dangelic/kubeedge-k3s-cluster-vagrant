@@ -2,3 +2,4 @@
 .vagrant
 /vm_cluster_outline
 /physical_model_simulation/node_modules
+/gitops/webserver_example/node_modules
