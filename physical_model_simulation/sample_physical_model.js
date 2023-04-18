@@ -61,6 +61,8 @@ client.on('connect', () => {
   console.log('Connected to MQTT broker running on '+brokerUrl);
   // Subscribe to downstream topic
   client.subscribe(downstreamTopic);
+  console.log('Subscribed downstream to '+downstreamTopic)
+  console.log('Will publish upstream to '+upstreamTopic)
 });
 
 // MQTT message received
