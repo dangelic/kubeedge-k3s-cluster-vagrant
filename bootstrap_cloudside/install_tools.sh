@@ -8,8 +8,8 @@ sudo apt -y upgrade
 sudo apt-get install -y net-tools
 
 # Node-RED
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt-get install -y nodejs
-sudo apt-get install -y npm
 sudo npm install -g --unsafe-perm node-red
 
 # PostgresDB
