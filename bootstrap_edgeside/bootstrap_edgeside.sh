@@ -49,7 +49,7 @@ sudo add-apt-repository -y ppa:mosquitto-dev/mosquitto-ppa
 sudo apt install -y mosquitto mosquitto-clients
 mosquitto -version
 
-# -- Setup KubeEdge in v1.13.0
+# -- Setup KubeEdge in v1.12.1
 
 # Get Keadm as installer tool for KubeEdge
 wget https://github.com/kubeedge/kubeedge/releases/download/v1.12.1/keadm-v1.12.1-linux-amd64.tar.gz

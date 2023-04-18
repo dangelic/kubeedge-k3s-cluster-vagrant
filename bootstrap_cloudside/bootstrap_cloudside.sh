@@ -40,17 +40,17 @@ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scrip
 chmod 700 get_helm.sh
 ./get_helm.sh
 
-# -- Setup KubeEdge in v1.13.0
+# -- Setup KubeEdge in v1.12.1
 
 # Get Keadm as installer tool for KubeEdge
-wget https://github.com/kubeedge/kubeedge/releases/download/v1.13.0/keadm-v1.13.0-linux-amd64.tar.gz
-tar -zxvf keadm-v1.13.0-linux-amd64.tar.gz
-cp keadm-v1.13.0-linux-amd64/keadm/keadm /usr/local/bin/keadm
+wget https://github.com/kubeedge/kubeedge/releases/download/v1.12.1/keadm-v1.12.1-linux-amd64.tar.gz
+tar -zxvf keadm-v1.12.1-linux-amd64.tar.gz
+cp keadm-v1.12.1-linux-amd64/keadm/keadm /usr/local/bin/keadm
 
 # Initialize Cloudcore with Keadm
 # NOTE: dynamicController.enable=true is important for EdgeMesh enablement
 # REF: https://edgemesh.netlify.app/guide/edge-kube-api.html#quick-start
-keadm init --advertise-address=$CLOUDSIDE_IP --profile version=v1.13.0 --kube-config=/root/.kube/config --set cloudCore.modules.dynamicController.enable=true
+keadm init --advertise-address=$CLOUDSIDE_IP --profile version=v1.12.1 --kube-config=/root/.kube/config --set cloudCore.modules.dynamicController.enable=true
 
 echo "Sleep 20..."
 sleep 20
