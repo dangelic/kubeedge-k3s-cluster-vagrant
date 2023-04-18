@@ -49,7 +49,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
             node.vm.box = VM_BOX_OS_MQTT_SERVER
             node.vm.hostname = "#{mqtt_server_vm_config[0]["hostname"]}.#{DOMAIN}"
             node.vm.network :private_network, ip: mqtt_server_vm_config[0]["ip"]
-            node.vm.network :forwarded_port, guest: 8080, host: 13080
+            node.vm.network :forwarded_port, guest: 80, host: 11000
+            node.vm.network :forwarded_port, guest: 8080, host: 11001
 
             # Setup dir sync for MQTT Server.
             node.vm.provision "file", source: "bootstrap_mqtt_server", destination: "$HOME/bootstrap_mqtt_server" # Setup
@@ -77,7 +78,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
             node.vm.box = VM_BOX_OS_RANCHERSERVER
             node.vm.hostname = "#{rancher_vm_config[0]["hostname"]}.#{DOMAIN}"
             node.vm.network :private_network, ip: rancher_vm_config[0]["ip"]
-            node.vm.network :forwarded_port, guest: 8080, host: 10080
+            node.vm.network :forwarded_port, guest: 80, host: 11010
+            node.vm.network :forwarded_port, guest: 8080, host: 11011
 
             # Setup dir sync for Rancher Server.
             node.vm.provision "file", source: "bootstrap_rancher", destination: "$HOME/bootstrap_rancher" # Setup
@@ -105,7 +107,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
         node.vm.box = VM_BOX_OS_CLOUDNODE
         node.vm.hostname = "#{cloudside_vm_config[0]["hostname"]}.#{DOMAIN}"
         node.vm.network :private_network, ip: cloudside_vm_config[0]["ip"]
-        node.vm.network :forwarded_port, guest: 8080, host: 11080 # k8s-API
+        node.vm.network :forwarded_port, guest: 80, host: 11020
+        node.vm.network :forwarded_port, guest: 8080, host: 11021
+        node.vm.network :forwarded_port, guest: 1880, host: 11022 # Node-RED
+        node.vm.network :forwarded_port, guest: 3000, host: 11023 # Grafana
 
         # Setup dir sync for Cloudside.
         node.vm.provision "file", source: "bootstrap_cloudside", destination: "$HOME/bootstrap_cloudside" # Setup
@@ -134,8 +139,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
 			node.vm.box = VM_BOX_OS_EDGENODE
 			node.vm.hostname = "#{edgeside_vm_config[edgenode-1]["hostname"]}.#{DOMAIN}"
 			node.vm.network :private_network, ip: edgeside_vm_config[edgenode-1]["ip"]
-			node.vm.network :forwarded_port, guest: 8080, host: 12080+edgenode-1
-            node.vm.network :forwarded_port, guest: 1880 , host: 18800+edgenode-1
+            node.vm.network :forwarded_port, guest: 80, host: 11030+edgenode-1
+			node.vm.network :forwarded_port, guest: 8080, host: 11040+edgenode-1
+            node.vm.network :forwarded_port, guest: 1880 , host: 11050+edgenode-1 # Node-RED
+            node.vm.network :forwarded_port, guest: 3000 , host: 11060+edgenode-1 # Grafana
 
             # Setup dir sync for Edgeside.
             node.vm.provision "file", source: "bootstrap_edgeside", destination: "$HOME/bootstrap_edgeside" # Cluster bootstrap
