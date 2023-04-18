@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: influxdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: kube-edgecore1-dev-l # Set the node selector to specify the node
+      containers:
+      - name: influxdb
+        image: influxdb
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8086

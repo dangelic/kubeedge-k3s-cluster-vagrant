@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodered
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodered
+  template:
+    metadata:
+      labels:
+        app: nodered
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: kube-edgecore1-dev-l # Set the node selector to specify the node
+      containers:
+      - name: nodered
+        image: nodered/node-red
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 1880
