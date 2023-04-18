@@ -18,18 +18,18 @@ spec:
       labels:
         app: sample-physical-model
     spec:
-      hostNetwork: true # NOTE!
+      hostNetwork: false # NOTE!
       nodeSelector:
-        kubernetes.io/hostname: <NAME OF EDGE NODE> # Set the node selector to specify the node
+        kubernetes.io/hostname: kube-edgecore1-dev-l # Set the node selector to specify the node
       containers:
       - name: sample-physical-model
-        image: docker.io/dangelic/edgecluster-prototype-dockerhub-registry:phymodel_v0-0-1
+        image: docker.io/dangelic/edgecluster-prototype-dockerhub-registry:phymodel_alpha_v0-0-1
         ports:
         - containerPort: 1883
         env:
         - name: BROKER_URL
-          value: "<mqtt://localhost:8080 or specific>" # Set the value of BROKER_URL to the Broker URL
+          value: "mqtt://10.43.75.28:1883" # Set the value of BROKER_URL to the Broker URL
         - name: DOWNSTREAM_TOPIC
-          value: "<DOWNSTREAM TOPIC>" # This is the topic the model subscribes to
+          value: "test/down" # This is the topic the model subscribes to
         - name: UPSTREAM_TOPIC
-          value: "<UPSTREAM TOPIC" # This is the topic the model publishes result data on
+          value: "test/up" # This is the topic the model publishes result data on
