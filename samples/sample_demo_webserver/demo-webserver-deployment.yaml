@@ -18,7 +18,7 @@ spec:
       labels:
         app: demo-webserver
     spec:
-      hostNetwork: true
+      hostNetwork: false
       nodeSelector:
         kubernetes.io/hostname: <NAME OF NODE> # Set the node selector to specify the node
       containers:
