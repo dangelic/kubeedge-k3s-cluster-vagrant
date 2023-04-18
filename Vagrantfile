@@ -117,6 +117,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
         # Setup dir sync for Cloudside.
         node.vm.provision "file", source: "bootstrap_cloudside", destination: "$HOME/bootstrap_cloudside" # Setup
         node.vm.provision "file", source: "tmp", destination: "$HOME/tmp" # Secrets
+        node.vm.provision "file", source: "manifests", destination: "$HOME/manifests" # Setup
         node.vm.provision "file", source: "sh/sh_cloudside", destination: "$HOME/sh/sh_cloudside" # Scripts to apply additional resources 
         node.vm.provision "file", source: "gitops", destination: "$HOME/gitops" # GitOps with ArgoCD
         node.vm.provision "file", source: "edgemesh", destination: "$HOME/edgemesh" # EdgeMesh
