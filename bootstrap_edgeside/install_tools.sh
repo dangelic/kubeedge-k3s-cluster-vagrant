@@ -11,6 +11,11 @@ sudo apt-get install -y net-tools
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo npm install -g --unsafe-perm node-red
+# Autostart Node-RED
+sudo npm install -g pm2
+pm2 start $(which node-red) -- -v
+pm2 save
+pm2 startup
 
 # PostgresDB
 sudo apt install wget ca-certificates
