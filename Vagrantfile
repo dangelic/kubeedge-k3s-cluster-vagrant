@@ -80,6 +80,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
             node.vm.network :private_network, ip: rancher_vm_config[0]["ip"]
             node.vm.network :forwarded_port, guest: 80, host: 11010
             node.vm.network :forwarded_port, guest: 8080, host: 11011
+            node.vm.network :forwarded_port, guest: 1886, host: 11012 # InfluxDB
 
             # Setup dir sync for Rancher Server.
             node.vm.provision "file", source: "bootstrap_rancher", destination: "$HOME/bootstrap_rancher" # Setup
@@ -111,6 +112,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
         node.vm.network :forwarded_port, guest: 8080, host: 11021
         node.vm.network :forwarded_port, guest: 1880, host: 11022 # Node-RED
         node.vm.network :forwarded_port, guest: 3000, host: 11023 # Grafana
+        node.vm.network :forwarded_port, guest: 1886, host: 11024 # InfluxDB
 
         # Setup dir sync for Cloudside.
         node.vm.provision "file", source: "bootstrap_cloudside", destination: "$HOME/bootstrap_cloudside" # Setup
@@ -143,6 +145,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
 			node.vm.network :forwarded_port, guest: 8080, host: 11040+edgenode-1
             node.vm.network :forwarded_port, guest: 1880 , host: 11050+edgenode-1 # Node-RED
             node.vm.network :forwarded_port, guest: 3000 , host: 11060+edgenode-1 # Grafana
+            node.vm.network :forwarded_port, guest: 1886 , host: 11070+edgenode-1 # InfluxDB
 
             # Setup dir sync for Edgeside.
             node.vm.provision "file", source: "bootstrap_edgeside", destination: "$HOME/bootstrap_edgeside" # Cluster bootstrap
