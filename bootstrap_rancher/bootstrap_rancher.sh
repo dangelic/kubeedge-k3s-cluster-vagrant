@@ -5,6 +5,10 @@
 sudo ufw disable
 sudo apt-get update
 
+# Install Chrome
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+
 export RANCHER_VERSION="2.7.0" # Tested.
 
 # Get Podman as Docker alternative
@@ -21,9 +25,6 @@ sudo apt-get install -y podman
 echo "
 [registries.search]
 registries = ['docker.io']" | sudo tee -a /etc/containers/registries.conf
-
-apt-get install software-properties-common -y
-add-apt-repository -y ppa:projectatomic/ppa
 
 # # Modified command
 # sudo podman run -d --restart=unless-stopped \
