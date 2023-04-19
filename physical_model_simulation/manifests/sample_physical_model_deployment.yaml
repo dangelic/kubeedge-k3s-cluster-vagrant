@@ -12,11 +12,15 @@ spec:
   selector:
     matchLabels:
       app: sample-physical-model
+      role: edge
+      edgenode: edgenode_00X # CHANGE X!
   replicas: 1
   template:
     metadata:
       labels:
         app: sample-physical-model
+        role: edge
+        edgenode: edgenode_00X # CHANGE X!
     spec:
       hostNetwork: false # NOTE!
       nodeSelector:
