@@ -23,8 +23,6 @@ spec:
         edgenode: edgenode_00X # CHANGE X!
     spec:
       hostNetwork: false # NOTE!
-      nodeSelector:
-        kubernetes.io/hostname: kube-edgecore1-dev-l # Set the node selector to specify the node
       containers:
       - name: sample-physical-model
         image: docker.io/dangelic/edgecluster-prototype-dockerhub-registry:phymodel_alpha_v0-0-1
