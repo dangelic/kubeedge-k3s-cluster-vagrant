@@ -10,7 +10,8 @@ spec:
   selector:
     app: mosquitto
     tier: frontend
-  type: LoadBalancer
+  type: NodePort
+  externalTrafficPolicy: Local
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -44,6 +45,8 @@ spec:
         app: mosquitto
         tier: frontend
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: kube-edgenode1-dev
       containers:
       - name: mosquitto
         image: eclipse-mosquitto:latest
