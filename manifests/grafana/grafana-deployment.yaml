@@ -13,7 +13,8 @@ spec:
         app: grafana
     spec:
       nodeSelector:
-        node-role.kubernetes.io/edge: "" # Set the node selector to select nodes with the label "node-role.kubernetes.io/edge"
+        node-role.kubernetes.io/edge: "" # Selects nodes with the label "node-role.kubernetes.io/edge"
+        edgenode: edgenode_X # Selects nodes with the label "edgenode: edgenode_001", CHANGE X!
       containers:
       - name: grafana
         image: grafana/grafana
