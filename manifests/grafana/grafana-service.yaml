@@ -1,11 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: grafana
+  name: grafana-service-edgenode00X # CHANGE X!
 spec:
   selector:
     app: grafana
+    node-role.kubernetes.io/edge: ""
+    edgenode: edgenode00X # CHANGE X!
   ports:
-    - name: http
-      port: 3000
-      targetPort: 3000
+  - name: http
+    port: 80
+    targetPort: 3000
+  type: ClusterIP
