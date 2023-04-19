@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: grafana
+  name: grafana-edgenode00X # CHANGE X!
 spec:
   replicas: 3
   selector:
@@ -11,10 +11,11 @@ spec:
     metadata:
       labels:
         app: grafana
+        edgenode: edgenode_00X # CHANGE X!
     spec:
       nodeSelector:
-        node-role.kubernetes.io/edge: "" # Selects nodes with the label "node-role.kubernetes.io/edge"
-        edgenode: edgenode_X # Selects nodes with the label "edgenode: edgenode_001", CHANGE X!
+        node-role.kubernetes.io/edge: ""
+        edgenode: edgenode_00X # CHANGE X!
       containers:
       - name: grafana
         image: grafana/grafana
