@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: influxdb
+  name: influxdb-edgenode00X # CHANGE X!
 spec:
   replicas: 1
   selector:
@@ -11,9 +11,11 @@ spec:
     metadata:
       labels:
         app: influxdb
+        edgenode: edgenode_00X # CHANGE X!
     spec:
       nodeSelector:
-        kubernetes.io/hostname: kube-edgecore1-dev-l # Set the node selector to specify the node
+        node-role.kubernetes.io/edge: ""
+        edgenode: edgenode_00X # CHANGE X!
       containers:
       - name: influxdb
         image: influxdb
