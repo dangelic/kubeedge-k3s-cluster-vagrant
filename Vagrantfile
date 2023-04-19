@@ -134,10 +134,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
             hosts.sync_hosts = true
             hosts.add_localhost_hostnames = false
         end
-        config.vm.provision "shell", inline: <<-SHELL
-            sudo sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
-            sudo systemctl restart sshd
-        SHELL
+        config.vm.provision "shell", path: "ssh.sh"
     end
 	
 	# --- Provisions n Worker-Nodes -> Edgeside running Edgecore
@@ -170,10 +167,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION = "2") do |config|
 				hosts.sync_hosts = true
 				hosts.add_localhost_hostnames = false
 			end
-            config.vm.provision "shell", inline: <<-SHELL
-                sudo sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
-                sudo systemctl restart sshd
-            SHELL            
+            config.vm.provision "shell", path: "ssh.sh"
 		end
 	end
 end
