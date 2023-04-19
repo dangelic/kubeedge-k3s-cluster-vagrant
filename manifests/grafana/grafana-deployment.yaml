@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: grafana
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: grafana
@@ -13,7 +13,7 @@ spec:
         app: grafana
     spec:
       nodeSelector:
-        kubernetes.io/hostname: kube-edgecore1-dev-l # Set the node selector to specify the node
+        node-role.kubernetes.io/edge: "" # Set the node selector to select nodes with the label "node-role.kubernetes.io/edge"
       containers:
       - name: grafana
         image: grafana/grafana
