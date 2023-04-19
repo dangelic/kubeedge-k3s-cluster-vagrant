@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-physical-model-service-edgenode-00X # CHANGE X!
+  namespace: sample-physical-model
+spec:
+  selector:
+    app: sample-physical-model
+    role: edge
+    edgenode: edgenode_00X # CHANGE X!
+  ports:
+  - name: mqtt
+    port: 1883
+    targetPort: 1883
+  type: ClusterIP
