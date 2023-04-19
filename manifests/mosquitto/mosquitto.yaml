@@ -1,17 +1,19 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mosquitto
+  name: mosquitto-edgenode001
   labels:
     app: mosquitto
 spec:
   ports:
   - port: 1883
+    targetPort: 1883
+    protocol: TCP
   selector:
     app: mosquitto
     tier: frontend
-  type: NodePort
-  externalTrafficPolicy: Local
+    node-name: kube-edgecore1-dev
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -44,9 +46,8 @@ spec:
       labels:
         app: mosquitto
         tier: frontend
+        node-name: kube-edgecore1-dev
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: kube-edgenode1-dev
       containers:
       - name: mosquitto
         image: eclipse-mosquitto:latest
