@@ -12,15 +12,16 @@ spec:
   selector:
     matchLabels:
       app: demo-webserver
-  replicas: 1
+  replicas: 3
   template:
     metadata:
       labels:
         app: demo-webserver
     spec:
       hostNetwork: false
-      nodeSelector:
-        kubernetes.io/hostname: <NAME OF NODE> # Set the node selector to specify the node
+      tolerations:
+      - key: node-role.kubernetes.io/edge
+        effect: NoSchedule
       containers:
       - name: demo-webserver
         # For demonstration, change the :state-1 tag to :state-2
