@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: influxdb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb
+  namespace: influxdb
+  labels:
+    app: influxdb
+spec:
+  selector:
+    app: influxdb
+  ports:
+    - name: http
+      port: 8086
+      targetPort: 8086
+    - name: mqtt
+      port: 1883
+      targetPort: 1883
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: influxdb
+  namespace: influxdb
+spec:
+  selector:
+    matchLabels:
+      app: influxdb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      containers:
+      - name: influxdb
+        image: influxdb
+        ports:
+        - containerPort: 8086
+        - containerPort: 1883
+        env:
+        - name: INFLUXDB_DB
+          value: "mydb"
+        - name: INFLUXDB_ADMIN_USER
+          value: "admin"
+        - name: INFLUXDB_ADMIN_PASSWORD
+          value: "password"
+        - name: INFLUXDB_USER
+          value: "user"
+        - name: INFLUXDB_USER_PASSWORD
+          value: "password"
+        - name: INFLUXDB_HTTP_AUTH_ENABLED
+          value: "true"
+        - name: INFLUXDB_HTTP_HTTPS_ENABLED
+          value: "false"
+        - name: INFLUXDB_HTTP_BIND_ADDRESS
+          value: ":8086"
+        - name: INFLUXDB_MQTT_ENABLED
+          value: "true"
+        - name: INFLUXDB_MQTT_BIND_ADDRESS
+          value: ":1883"
+        - name: INFLUXDB_MQTT_AUTH_ENABLED
+          value: "false"
+        - name: INFLUXDB_MQTT_AUTH_ALLOW_ANONYMOUS
+          value: "true"
+        - name: INFLUXDB_MQTT_SUBSCRIPTIONS
+          value: "broker1:1883, broker2:1883"
+        - name: INFLUXDB_MQTT_RETAINED_MESSAGES
+          value: "false"
+        - name: INFLUXDB_MQTT_MAX_QUEUED_MESSAGES
+          value: "1000"
+        - name: INFLUXDB_MQTT_MAX_QUEUED_MESSAGES_PER_SESSION
+          value: "100"
+      nodeSelector:
+        kubernetes.io/hostname: kube-cloudcore-dev
