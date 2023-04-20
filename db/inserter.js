@@ -23,13 +23,11 @@ const influx = new Influx.InfluxDB({
         {
             measurement: 'sensor_data',
             fields: {
-                temperature: Influx.FieldType.FLOAT,
-                pressure: Influx.FieldType.FLOAT,
-                vibration: Influx.FieldType.FLOAT,
-                humidity: Influx.FieldType.FLOAT
+                value: Influx.FieldType.FLOAT
             },
             tags: [
-                'machine_id'
+                'machine_id',
+                'sensor_type'
             ]
         }
     ]
@@ -42,21 +40,40 @@ brokers.forEach((broker) => {
         console.log(`Connected to ${broker.host}:${broker.port}`);
         client.subscribe(broker.topic);
     });
-    
+
     // Listen to incoming messages
     client.on('message', (topic, message) => {
         console.log(`Received message on ${topic}: ${message}`);
         const data = JSON.parse(message);
         const { temperature, pressure, vibration, humidity } = data;
         const machineId = topic.split('/').pop(); // Extract machine ID from topic
-        const timestamp = Date.now();
-        
+        const timestamp = Date.now() * 10**6; // Convert to nanoseconds
+
+        // Determine the sensor type based on which value is present in the message
+        let sensorType, value;
+        if (typeof temperature !== 'undefined') {
+            sensorType = 'temperature';
+            value = temperature;
+        } else if (typeof pressure !== 'undefined') {
+            sensorType = 'pressure';
+            value = pressure;
+        } else if (typeof vibration !== 'undefined') {
+            sensorType = 'vibration';
+            value = vibration;
+        } else if (typeof humidity !== 'undefined') {
+            sensorType = 'humidity';
+            value = humidity;
+        } else {
+            console.error(`Unknown sensor type for message: ${message}`);
+            return;
+        }
+
         // Write data to InfluxDB
         influx.writePoints([
             {
                 measurement: 'sensor_data',
-                fields: { temperature, pressure, vibration, humidity },
-                tags: { machine_id: machineId },
+                fields: { value },
+                tags: { machine_id: machineId, sensor_type: sensorType },
                 timestamp: timestamp
             }
         ]).then(() => {
