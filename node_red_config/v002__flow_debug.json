@@ -1,0 +1,240 @@
+[
+    {
+        "id": "6dfc7966e94c974c",
+        "type": "tab",
+        "label": "FLOW-EdgeNode001",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "569523d6.ea2ce4",
+        "type": "function",
+        "z": "6dfc7966e94c974c",
+        "name": "s1_sensor_temperature",
+        "func": "msg.payload = {\n    temperature: Math.floor(Math.random() * 100),\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 180,
+        "wires": [
+            [
+                "de8eebbf.6dd47"
+            ]
+        ]
+    },
+    {
+        "id": "a59cfe8c.b025f",
+        "type": "function",
+        "z": "6dfc7966e94c974c",
+        "name": "s1_sensor_pressure",
+        "func": "msg.payload = {\n    pressure: Math.floor(Math.random() * 1000)\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 220,
+        "wires": [
+            [
+                "de8eebbf.6dd47"
+            ]
+        ]
+    },
+    {
+        "id": "de8eebbf.6dd47",
+        "type": "function",
+        "z": "6dfc7966e94c974c",
+        "name": "protocol_mapper_dummy",
+        "func": "var newPayload = {\n    temperature: msg.payload.temperature,\n    pressure: msg.payload.pressure,\n    vibration: msg.payload.vibration,\n    humidity: msg.payload.humidity\n};\nmsg.payload = newPayload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 240,
+        "wires": [
+            [
+                "e539987a.1f215"
+            ]
+        ]
+    },
+    {
+        "id": "e539987a.1f215",
+        "type": "mqtt out",
+        "z": "6dfc7966e94c974c",
+        "name": "MQTT_downstream",
+        "topic": "sensor/flow/machine001/downstream",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "11968762c29157b6",
+        "x": 1370,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "fcf00e96.8cf2a",
+        "type": "inject",
+        "z": "6dfc7966e94c974c",
+        "name": "Trigger_5s",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 450,
+        "y": 240,
+        "wires": [
+            [
+                "569523d6.ea2ce4",
+                "a59cfe8c.b025f",
+                "893ac00e6584d818",
+                "9348b4c2d4d1357e"
+            ]
+        ]
+    },
+    {
+        "id": "893ac00e6584d818",
+        "type": "function",
+        "z": "6dfc7966e94c974c",
+        "name": "s1_sensor_vibration",
+        "func": "msg.payload = {\n    vibration: Math.floor(Math.random() * 100),\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 260,
+        "wires": [
+            [
+                "de8eebbf.6dd47"
+            ]
+        ]
+    },
+    {
+        "id": "9348b4c2d4d1357e",
+        "type": "function",
+        "z": "6dfc7966e94c974c",
+        "name": "s1_sensor_humidity",
+        "func": "msg.payload = {\n    humidity: Math.floor(Math.random() * 1000)\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 300,
+        "wires": [
+            [
+                "de8eebbf.6dd47"
+            ]
+        ]
+    },
+    {
+        "id": "cdd8f4ae1c32216e",
+        "type": "mqtt in",
+        "z": "6dfc7966e94c974c",
+        "name": "MQTT_upstream",
+        "topic": "sensor/flow/machine001/upstream",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "11968762c29157b6",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 440,
+        "y": 380,
+        "wires": [
+            [
+                "d7ffb2410ecd3781"
+            ]
+        ]
+    },
+    {
+        "id": "d7ffb2410ecd3781",
+        "type": "function",
+        "z": "6dfc7966e94c974c",
+        "name": "protocol_mapper_dummy",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 380,
+        "wires": [
+            [
+                "14dbb066761bd229"
+            ]
+        ]
+    },
+    {
+        "id": "14dbb066761bd229",
+        "type": "mqtt out",
+        "z": "6dfc7966e94c974c",
+        "name": "MQTT_debug",
+        "topic": "sensor/flow/machine001/debug",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "11968762c29157b6",
+        "x": 1360,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "11968762c29157b6",
+        "type": "mqtt-broker",
+        "name": "mosquitto-edgenode001",
+        "broker": "10.43.11.158",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": "",
+        "credentials": {
+            "user": "",
+            "password": ""
+        }
+    }
+]
