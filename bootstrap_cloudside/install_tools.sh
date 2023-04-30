@@ -6,20 +6,21 @@ sudo apt-get -y update
 sudo apt -y upgrade
 
 sudo apt-get install -y net-tools
+sudp apt-get install -y influxdb-client
 
-# Node-RED
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt-get install -y nodejs
-sudo npm install -g --unsafe-perm node-red
-# Autostart Node-RED
-sudo npm install -g pm2
-pm2 start $(which node-red) -- -v
-pm2 save
-pm2 startup
+# # Node-RED
+# curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+# sudo apt-get install -y nodejs
+# sudo npm install -g --unsafe-perm node-red
+# # Autostart Node-RED
+# sudo npm install -g pm2
+# pm2 start $(which node-red) -- -v
+# pm2 save
+# pm2 startup
 
-# PostgresDB
-sudo apt install wget ca-certificates
-wget -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
-sudo apt update
-apt install -y postgresql postgresql-contrib
+# # PostgresDB
+# sudo apt install wget ca-certificates
+# wget -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+# sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
+# sudo apt update
+# apt install -y postgresql postgresql-contrib
