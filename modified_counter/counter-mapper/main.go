@@ -111,8 +111,6 @@ func main() {
 	// Link to pseudo device counter
 	ctr := counter.NewCounter(publishToMqtt)
 
-	ctr.TurnOn()
-
 	current_status := "OFF"
 
 	token := cli.Subscribe(topic+"/document", 0, func(client mqtt.Client, msg mqtt.Message) {
