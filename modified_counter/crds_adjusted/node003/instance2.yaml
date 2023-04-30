@@ -1,0 +1,31 @@
+apiVersion: devices.kubeedge.io/v1alpha2
+kind: Device
+metadata:
+  name: pseudo-sensor-counter-instance-005 # Match the topic given as .env in deployment for counter/mapper
+  labels:
+    description: 'counter'
+spec:
+  protocol: 
+    customizedProtocol:
+      protocolName: counter # Pre-defined protocol of KubeEdge. Please leave it like this.
+  deviceModelRef:
+    name: pseudo-sensor-counter-model
+  nodeSelector:
+    nodeSelectorTerms:
+    - matchExpressions:
+      - key: ''
+        operator: In
+        values:
+        - kube-edgecore3 # The name the deployment with given .env matching the device is on
+
+status:
+  twins:
+    - propertyName: status
+      desired:
+        metadata:
+          type: string
+        value: 'OFF' # Change to "ON"
+      reported:
+        metadata:
+          type: string
+        value: '0'
