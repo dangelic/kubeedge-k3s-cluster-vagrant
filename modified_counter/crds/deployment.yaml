@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: pseudo-sensor-counter-datagen-mapper-<NUM> # Change NUM to sensor number (e.g. 001)
+  name: pseudo-sensor-counter-datagen-mapper-<NUM>
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      k8s-app: pseudo-sensor-counter-datagen-mapper-<NUM>
+  template:
+    metadata:
+      labels:
+        k8s-app: pseudo-sensor-counter-datagen-mapper-<NUM>
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: <EDGE NODE NAME> # The Edge Node where the device/mapper is placed on. Must match with the instance!
+      hostNetwork: true
+      containers:
+      - name: pseudo-sensor-counter-datagen-mapper-<PLACEHOLDER> # replace <PLACEHOLDER> with the sensor number (e.g. 001)
+        image: dangelic/edgecluster-prototype-dockerhub-registry:pseudo-sensor-counter
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: MQTT_URL
+          value: "localhost:1883" # replace with the IP of the MQTT broker
+        - name: DEVICE_NAME
+          value: "<PLACEHOLDER>" # replace <PLACEHOLDER> with the sensor number (e.g. 001)
+        - name: MOCK_MODE
+          value: "fastCountUp" # Can be: "regularCountUp", "fastCountUp", "slowCountUp", "randomCount"
+      restartPolicy: Always

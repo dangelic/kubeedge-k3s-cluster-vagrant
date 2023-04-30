@@ -1,7 +1,7 @@
 apiVersion: devices.kubeedge.io/v1alpha2
 kind: DeviceModel
 metadata:
- name: counter-model
+ name: pseudo-sensor-counter-model
  namespace: default
 spec:
  properties:
