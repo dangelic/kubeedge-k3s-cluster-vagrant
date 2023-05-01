@@ -1,7 +1,7 @@
 apiVersion: devices.kubeedge.io/v1alpha2
 kind: Device
 metadata:
-  name: pseudo-sensor-counter-instance-001 # Match the topic given as .env in deployment for counter/mapper
+  name: pseudo-edgedevice-counter-instance-001 # Match the topic given as .env in deployment for counter/mapper
   labels:
     description: 'counter'
 spec:
@@ -9,7 +9,7 @@ spec:
     customizedProtocol:
       protocolName: counter # Pre-defined protocol of KubeEdge. Please leave it like this.
   deviceModelRef:
-    name: pseudo-sensor-counter-model
+    name: pseudo-edgedevice-counter-model
   nodeSelector:
     nodeSelectorTerms:
     - matchExpressions:
