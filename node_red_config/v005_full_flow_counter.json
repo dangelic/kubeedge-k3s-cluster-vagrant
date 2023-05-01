@@ -1,0 +1,193 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "FLOW counter protocol",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "9c3d97e3.e3c05",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "Trigger",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "2df2426c.9b9ac2"
+            ]
+        ]
+    },
+    {
+        "id": "2df2426c.9b9ac2",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://localhost:6443/apis/devices.kubeedge.io/v1alpha2/devices",
+        "tls": "afbf319599fa3c65",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Authorization",
+                "valueType": "other",
+                "valueValue": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkJJajhSMXFLRGQ0bWFWS1ZfeUh0ZUlkZlJPTnlHclZjUVhTQnJzcFlLWGMifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6Im15LXNlcnZpY2UtYWNjb3VudC10b2tlbi04c3hrbCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJteS1zZXJ2aWNlLWFjY291bnQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIxYzQ4ZWYwYi01YjllLTRhY2EtYWJhMS03ZWIyYmI2NjcwMGEiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6ZGVmYXVsdDpteS1zZXJ2aWNlLWFjY291bnQifQ.ijKwHyGjbwf0bireJ_EA7vmm-zx8k7ZnCKaoj_H5WGcVZXaTC1sry2bQlae4KZfQglGrkcsFUCwPNPLNBn8-jzRynlaKK9d659hFZl3x-3qCYWmOOXyEhgQgFWRQDoFANP0yCZKiSQ7ylNIDYrMshLm4STf9kTrKpWJybDNTJXs7mk6kZVD-wwfbNFPTBD7wVyii3TBImw9JAvYY1Dm7SjczGNFDSm_n_tmaxDMOXNdszwnq3ibbONVUNM-tjb6m03MEXykzWQCJ2ZRGpZWURZv7uUvV8244K0Xgpc_RupjWgg9Ed-Oh7E2Uy87tg2Enhj-nt9dmWCwr4ESAz5vV0w"
+            }
+        ],
+        "x": 290,
+        "y": 180,
+        "wires": [
+            [
+                "0d0fab9425b78b71"
+            ]
+        ]
+    },
+    {
+        "id": "fac77f73ba94774f",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug json-parser",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "0d0fab9425b78b71",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "JSON-Parser",
+        "func": "var data = JSON.parse(msg.payload);\n\nvar devices = [];\n\nfor (var i = 0; i < data.items.length; i++) {\n    var device = {};\n    var item = data.items[i];\n\n    device.name = item.metadata.name;\n    device.model = item.spec.deviceModelRef.name;\n    device.sensor_count_value = item.status.twins[0].reported.value;\n    device.state = item.status.twins[0].desired.value;\n    device.status_timestamp = Date.parse(item.metadata.creationTimestamp);\n    device.protocol = item.spec.protocol.customizedProtocol.protocolName;\n    device.node = item.spec.nodeSelector.nodeSelectorTerms[0].matchExpressions[0].values[0];\n    device.creation_timestamp = Date.now();\n\n    devices.push(device);\n}\n\nmsg.payload = devices;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 180,
+        "wires": [
+            [
+                "fac77f73ba94774f",
+                "5e64f8a2.9519ac"
+            ]
+        ]
+    },
+    {
+        "id": "5e64f8a2.9519ac",
+        "type": "split",
+        "z": "f6f2187d.f17ca8",
+        "name": "Split Array",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": "1",
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "payload",
+        "x": 1110,
+        "y": 320,
+        "wires": [
+            [
+                "f24c6c57.6d9c6"
+            ]
+        ]
+    },
+    {
+        "id": "f24c6c57.6d9c6",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Set Measurement",
+        "rules": [
+            {
+                "t": "set",
+                "p": "measurement",
+                "pt": "msg",
+                "to": "pseudo-edgedevice-counter-data",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1290,
+        "y": 320,
+        "wires": [
+            [
+                "80b8e2c6.26d728"
+            ]
+        ]
+    },
+    {
+        "id": "80b8e2c6.26d728",
+        "type": "influxdb out",
+        "z": "f6f2187d.f17ca8",
+        "influxdb": "a62d1d5b.1cb17",
+        "name": "InfluxDB",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "x": 1450,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "afbf319599fa3c65",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "a62d1d5b.1cb17",
+        "type": "influxdb",
+        "hostname": "localhost",
+        "port": "8086",
+        "protocol": "http",
+        "database": "pseudo-edgedevice-counter-data",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    }
+]
