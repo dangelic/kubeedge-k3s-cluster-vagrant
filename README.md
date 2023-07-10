@@ -4,8 +4,10 @@
 - Provides shell scripts to set up a virtual multi-node Dev Edge Cluster with few commands
 - Leverages K3s v2.3.5 and KubeEdge v1.3.0 for a lightweight Edge Dev Environment 
 - Sets containerd as CRI (instead of standard configuration via Docker) on all Cluster Nodes
+- Convenient EdgeMesh network setup
+- KubeEdge Device Management Model (DMI) Demo with a presetup GO-Backend to mock and map sensor data
 - Optionally configures Rancher v2.7.0 for convenient Cluster Management
-- **Upcoming:** GitOps integration and EdgeMesh network features
+- GitOps integration with ArgoCD
 
 # Get started
 **Table of Contents**
